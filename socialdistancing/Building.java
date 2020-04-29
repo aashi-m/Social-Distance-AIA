@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +29,25 @@ public class Building extends JPanel implements ActionListener{
 	Control control; //
 	Timer timer; //Event control	
 	int time = 0; //Track time as the simulation runs
+			Building view; //JPanel graphics window
+
+
+
+	//Declares Wall sprites and positions of walls
+	static Wall vWall1 = new Wall(550, 0, "SocialDistancingImages/wall2.png", true);
+	static Wall vWall2 = new Wall(200, 0, "SocialDistancingImages/wall2.png", true);
+	static Wall vWall3 = new Wall(550, 400, "SocialDistancingImages/wall2.png", true);
+	static Wall vWall4 = new Wall(200, 400, "SocialDistancingImages/wall2.png", true);
+	
+	static Wall hWall1 = new Wall(620, 160, "SocialDistancingImages/wall1.png", false);
+	static Wall hWall2 = new Wall(-25, 160, "SocialDistancingImages/wall1.png", false);
+	static Wall hWall3 = new Wall(620, 400, "SocialDistancingImages/wall1.png", false);
+	static Wall hWall4 = new Wall(-25, 400, "SocialDistancingImages/wall1.png", false);
+	static Wall[] walls = {vWall1, hWall1, vWall2, hWall2, vWall3, hWall3, vWall4, hWall4};
+	static Rectangle[] r = {vWall1.getBounds(), hWall1.getBounds(), vWall2.getBounds(), hWall2.getBounds(),
+			vWall3.getBounds(), hWall3.getBounds(), vWall4.getBounds(), hWall4.getBounds()};
+	
+	
 	
 	/* constructor will setup our main Graphic User Interface - a simple Frame! */
 	public Building(Control ctl, String title) {
@@ -47,6 +67,34 @@ public class Building extends JPanel implements ActionListener{
 		frame.setVisible(true);
 		frame.add(this); //add this class (JPanel) to the JFrame
 	}
+	
+	
+	public void paintWalls(Graphics g) {
+
+	//draws vertical walls
+	g.drawImage(vWall1.getImage(), vWall1.getX(), vWall1.getY(), this);
+	g.drawImage(vWall2.getImage(), vWall2.getX(), vWall2.getY(), this);
+	g.drawImage(vWall3.getImage(), vWall3.getX(), vWall3.getY(), this);
+	g.drawImage(vWall4.getImage(), vWall4.getX(), vWall4.getY(), this);
+	
+	//draws horizontal walls
+	g.drawImage(hWall1.getImage(), hWall1.getX(), hWall1.getY(), this);
+	g.drawImage(hWall2.getImage(), hWall2.getX(), hWall2.getY(), this);
+	g.drawImage(hWall3.getImage(), hWall3.getX(), hWall3.getY(), this);
+	g.drawImage(hWall4.getImage(), hWall4.getX(), hWall4.getY(), this);
+	
+	//sets text color
+	g.setColor(Color.BLACK);
+	g.setFont(new Font("Roboto", Font.BOLD, 20));
+	
+	g.drawString("Sprouts", 610, 50);
+	g.drawString("Scripps Medical", 5, 50);
+	g.drawString("Board and Brew", 5, 440);
+	g.drawString("Mr. M's House", 590, 440);
+	
+}
+
+
 	
 	//activation of Simulator separated from Constructor 
 	public void activate() {
@@ -76,7 +124,7 @@ public class Building extends JPanel implements ActionListener{
 		
 		//events
 		super.paintComponent(g); // a necessary call to the parent paint method, required for proper screen refreshing
-		control.paintWalls(g);
+		this.paintWalls(g);
 		control.paintPersons(g); // repaint all objects in simulation
 		
 	} 
