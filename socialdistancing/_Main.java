@@ -1,6 +1,6 @@
 package socialdistancing;
 
-//entry point
+//entry point Aashi Mittal
 public class _Main {
 	Settings sets;
 	Control control;
